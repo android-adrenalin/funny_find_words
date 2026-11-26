@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#10182F">
+  <meta name="description" content="Текущая версия игры Funny Find Words и минимальная поддерживаемая версия.">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Funny Find Words — обновления">
+  <meta property="og:description" content="Текущая версия игры Funny Find Words и минимальная поддерживаемая версия.">
+  <title>Funny Find Words — обновления</title>
+  <link rel="stylesheet" href="./site.css">
+</head>
+<body>
+
+    <div class="decor" aria-hidden="true">
+      <i style="width:180px;height:180px;left:-60px;top:80px"></i>
+      <i style="width:320px;height:320px;right:-110px;top:-80px"></i>
+      <i style="width:120px;height:120px;left:12%;bottom:18%"></i>
+      <i style="width:260px;height:260px;right:6%;bottom:-90px"></i>
+      <u style="width:120px;left:6%;top:34%"></u>
+      <u style="width:70px;left:22%;top:12%"></u>
+      <u style="width:90px;right:10%;top:46%"></u>
+      <u style="width:60px;right:18%;bottom:26%"></u>
+    </div>
+<div class="page">
+
+  <header class="nav">
+    <a class="brand" href="./">
+      <span class="mark" aria-hidden="true"><span style="--c:#BD84A4"></span><span style="--c:#FFACB8"></span><span style="--c:#9898BC"></span><span style="--c:#487BA6"></span></span>
+      Funny Find Words
+    </a>
+    <nav>
+      <a href="./updates.html">Обновления</a>
+      <a href="./privacy.html">Политика</a>
+      <a href="./terms.html">Условия</a>
+    </nav>
+  </header>
+  <main class="doc">
+    <h1>Обновления</h1>
+    <p class="updated">
+      Если версия игры устарела, приложение попросит обновиться из Google Play.
+    </p>
+
+    <p class="status" id="status">
+      <span class="dot" id="status-dot" aria-hidden="true"></span>
+      <span id="status-text">Читаю данные…</span>
+    </p>
+
+    <div class="stats">
+      <div class="stat">
+        <p class="k">Текущая версия</p>
+        <p class="v" id="latest-name">—</p>
+        <p class="sub" id="latest-code"></p>
+      </div>
+      <div class="stat">
+        <p class="k">Минимальная версия</p>
+        <p class="v" id="min-code">—</p>
+        <p class="sub">Ниже неё игра просит обновление</p>
+      </div>
+      <div class="stat">
+        <p class="k">Дата публикации</p>
+        <p class="v small" id="published-at">—</p>
+      </div>
+    </div>
+
+    <div class="actions">
+      <a class="btn btn-play" href="https://play.google.com/store/apps/details?id=com.androidadrenalin.funny_find_words"><svg width="14" height="16" viewBox="0 0 14 16" aria-hidden="true"><path fill="currentColor" d="M1 1.2v13.6c0 .5.5.8.9.5l11-6.8a.6.6 0 0 0 0-1L1.9.7C1.5.4 1 .7 1 1.2Z"/></svg>Открыть в Google Play</a>
+      <a class="btn btn-ghost" href="./version.json">version.json</a>
+    </div>
+  </main>
+
+  <footer class="foot">
+    <span>© 2024–2026 AdrenalinAndroid · <a href="mailto:android.adrenalin@outlook.com">android.adrenalin@outlook.com</a></span>
+    <span class="links">
+      <a href="https://play.google.com/store/apps/details?id=com.androidadrenalin.funny_find_words">Google Play</a>
+      <a href="./privacy.html">Политика конфиденциальности</a>
+      <a href="./terms.html">Условия использования</a>
+    </span>
+  </footer>
+</div>
+
+<script>
+  (function () {
+    var text = document.getElementById('status-text');
+    var dot = document.getElementById('status-dot');
+    var fields = {
+      latestName: document.getElementById('latest-name'),
+      latestCode: document.getElementById('latest-code'),
+      minCode: document.getElementById('min-code'),
+      published: document.getElementById('published-at')
+    };
+
+    function fail(message) {
+      text.textContent = message;
+      dot.classList.add('error');
+    }
+
+    function formatDate(value) {
+      if (!value) { return '—'; }
+      var date = new Date(value + 'T00:00:00');
+      if (isNaN(date)) { return value; }
+      return date.toLocaleDateString('ru-RU', { day: 'numeric', month: 'long', year: 'numeric' });
+    }
+
+    fetch('./version.json?ts=' + Date.now(), { cache: 'no-store' })
+      .then(function (r) {
+        if (!r.ok) { throw new Error('HTTP ' + r.status); }
+        return r.json();
+      })
+      .then(function (c) {
+        fields.latestName.textContent = c.latestVersionName || '—';
+        fields.latestCode.textContent = c.latestVersionCode
+          ? 'Код версии ' + c.latestVersionCode : '';
+        fields.minCode.textContent = c.minSupportedVersionCode;
+        fields.published.textContent = formatDate(c.publishedAt);
+        text.textContent = 'Данные загружены';
+      })
+      .catch(function (error) {
+        fail('Не удалось прочитать version.json: ' + error.message);
+      });
+  })();
+</script>
+</body>
+</html>

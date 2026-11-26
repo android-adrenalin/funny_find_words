@@ -3,208 +3,133 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Funny Find Words — обновления</title>
-  <style>
-    :root {
-      color-scheme: dark;
-      --bg: #10182f;
-      --panel: #18233f;
-      --panel-border: #2a3a5f;
-      --text: #f2f5fb;
-      --muted: #a9b6d3;
-      --accent: #4cc26b;
-      --accent-dark: #2f9a4e;
-      --error: #ff7a7a;
-    }
-    * { box-sizing: border-box; }
-    body {
-      margin: 0;
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 24px;
-      background:
-        radial-gradient(circle at 20% 10%, rgba(76, 194, 107, 0.12), transparent 45%),
-        radial-gradient(circle at 85% 90%, rgba(90, 140, 255, 0.12), transparent 45%),
-        var(--bg);
-      color: var(--text);
-      font: 16px/1.5 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
-    }
-    main {
-      width: 100%;
-      max-width: 640px;
-      padding: 32px;
-      border: 1px solid var(--panel-border);
-      border-radius: 24px;
-      background: rgba(24, 35, 63, 0.92);
-      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.35);
-    }
-    h1 {
-      margin: 0 0 6px;
-      font-size: clamp(24px, 5vw, 32px);
-      line-height: 1.15;
-      letter-spacing: -0.02em;
-    }
-    .subtitle {
-      margin: 0 0 24px;
-      color: var(--muted);
-    }
-    .status {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 6px 12px;
-      margin-bottom: 24px;
-      border: 1px solid var(--panel-border);
-      border-radius: 999px;
-      color: var(--muted);
-      font-size: 14px;
-    }
-    .dot {
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
-      background: var(--accent);
-    }
-    .dot.error { background: var(--error); }
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      margin: 0 0 24px;
-      font-variant-numeric: tabular-nums;
-    }
-    caption {
-      caption-side: top;
-      text-align: left;
-      padding-bottom: 10px;
-      color: var(--muted);
-      font-size: 14px;
-    }
-    th, td {
-      padding: 12px 10px;
-      border-bottom: 1px solid var(--panel-border);
-      text-align: left;
-      vertical-align: top;
-    }
-    th {
-      width: 52%;
-      color: var(--muted);
-      font-weight: 500;
-    }
-    td { font-weight: 700; }
-    .actions {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 12px;
-    }
-    a.button {
-      display: inline-block;
-      padding: 12px 20px;
-      border-radius: 14px;
-      background: linear-gradient(180deg, var(--accent), var(--accent-dark));
-      color: #06210f;
-      font-weight: 800;
-      text-decoration: none;
-    }
-    a.button.secondary {
-      background: transparent;
-      border: 1px solid var(--panel-border);
-      color: var(--text);
-    }
-    .note {
-      margin: 24px 0 0;
-      padding-top: 18px;
-      border-top: 1px solid var(--panel-border);
-      color: var(--muted);
-      font-size: 14px;
-    }
-    code {
-      padding: 2px 6px;
-      border-radius: 6px;
-      background: rgba(255, 255, 255, 0.07);
-      color: var(--text);
-      font-size: 0.95em;
-    }
-    @media (max-width: 480px) {
-      main { padding: 22px; border-radius: 18px; }
-      th, td { padding: 10px 6px; }
-    }
-  </style>
+  <meta name="theme-color" content="#10182F">
+  <meta name="description" content="Игра «найди слова»: сто уровней, бонусные слова и подсказки, русский и английский языки. Бесплатно в Google Play.">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Funny Find Words — головоломка со словами">
+  <meta property="og:description" content="Игра «найди слова»: сто уровней, бонусные слова и подсказки, русский и английский языки. Бесплатно в Google Play.">
+  <title>Funny Find Words — головоломка со словами</title>
+  <link rel="stylesheet" href="./site.css">
 </head>
 <body>
-<main>
-  <h1>Funny Find Words</h1>
-  <p class="subtitle">Параметры обновлений приложения</p>
 
-  <div class="status" id="status">
-    <span class="dot" id="status-dot"></span>
-    <span id="status-text">Читаю version.json…</span>
-  </div>
+    <div class="decor" aria-hidden="true">
+      <i style="width:180px;height:180px;left:-60px;top:80px"></i>
+      <i style="width:320px;height:320px;right:-110px;top:-80px"></i>
+      <i style="width:120px;height:120px;left:12%;bottom:18%"></i>
+      <i style="width:260px;height:260px;right:6%;bottom:-90px"></i>
+      <u style="width:120px;left:6%;top:34%"></u>
+      <u style="width:70px;left:22%;top:12%"></u>
+      <u style="width:90px;right:10%;top:46%"></u>
+      <u style="width:60px;right:18%;bottom:26%"></u>
+    </div>
+<div class="page">
 
-  <table aria-describedby="table-note">
-    <caption id="table-note">Эти значения приложение читает при запуске.</caption>
-    <tbody>
-      <tr><th>Минимально поддерживаемая версия</th><td id="min-code">—</td></tr>
-      <tr><th>Последняя версия (versionCode)</th><td id="latest-code">—</td></tr>
-      <tr><th>Название последней версии</th><td id="latest-name">—</td></tr>
-      <tr><th>Дата публикации</th><td id="published-at">—</td></tr>
-      <tr><th>Версия схемы</th><td id="schema">—</td></tr>
-    </tbody>
-  </table>
-
-  <div class="actions">
-    <a class="button" id="play-link"
-       href="https://play.google.com/store/apps/details?id=com.androidadrenalin.funny_find_words">
-      Открыть в Google Play
+  <header class="nav">
+    <a class="brand" href="./">
+      <span class="mark" aria-hidden="true"><span style="--c:#BD84A4"></span><span style="--c:#FFACB8"></span><span style="--c:#9898BC"></span><span style="--c:#487BA6"></span></span>
+      Funny Find Words
     </a>
-    <a class="button secondary" href="./version.json">version.json</a>
-  </div>
+    <nav>
+      <a href="./updates.html">Обновления</a>
+      <a href="./privacy.html">Политика</a>
+      <a href="./terms.html">Условия</a>
+    </nav>
+  </header>
+  <main>
+    <section class="hero">
+      <div>
+        <p class="eyebrow">Головоломка со словами</p>
+        <h1 class="wordmark"><span class="grp"><span class="tile" style="--c:#BD84A4">F</span><span class="tile" style="--c:#FFACB8">U</span><span class="tile" style="--c:#9898BC">N</span><span class="tile" style="--c:#487BA6">N</span><span class="tile" style="--c:#F2DCDC">Y</span></span><span class="grp"><span class="tile" style="--c:#A9BCF0">F</span><span class="tile" style="--c:#7FA9E0">I</span><span class="tile" style="--c:#2EBEC4">N</span><span class="tile" style="--c:#8DCEB9">D</span></span><span class="grp"><span class="tile" style="--c:#BEC5BD">W</span><span class="tile" style="--c:#F4A259">O</span><span class="tile" style="--c:#E9C46A">R</span><span class="tile" style="--c:#90BE6D">D</span><span class="tile" style="--c:#C77DFF">S</span></span></h1>
+        <p class="tagline">Найди все слова!</p>
+        <p class="lead">
+          Слова спрятаны в сетке букв: ведите путь по клеткам — и найденное слово
+          закрашивается. Сто уровней, бонусные слова и подсказки.
+        </p>
+        <div class="actions">
+          <a class="btn btn-play" href="https://play.google.com/store/apps/details?id=com.androidadrenalin.funny_find_words"><svg width="14" height="16" viewBox="0 0 14 16" aria-hidden="true"><path fill="currentColor" d="M1 1.2v13.6c0 .5.5.8.9.5l11-6.8a.6.6 0 0 0 0-1L1.9.7C1.5.4 1 .7 1 1.2Z"/></svg>Открыть в Google Play</a>
+          <a class="btn btn-ghost" href="./updates.html">Что нового</a>
+        </div>
+        <p class="meta">
+          <span>Бесплатно</span>
+          <span class="dash" aria-hidden="true"></span>
+          <span>Android</span>
+          <span class="dash" aria-hidden="true"></span>
+          <span>Версия <span data-version>1.1.1</span></span>
+        </p>
+      </div>
+      <div class="board" aria-hidden="true"><b class="on" style="--c:#BD84A4">W</b><b>A</b><b>V</b><b>E</b><b>S</b><b>T</b><b class="on" style="--c:#FFACB8">O</b><b>D</b><b>L</b><b>I</b><b>N</b><b>E</b><b class="on" style="--c:#9898BC">R</b><b>U</b><b>S</b><b>T</b><b>Y</b><b>K</b><b class="on" style="--c:#487BA6">D</b><b>A</b><b>I</b><b>S</b><b>Y</b><b>M</b><b class="on" style="--c:#F2DCDC">S</b><b>O</b><b>N</b><b>G</b><b>B</b><b>T</b><b>A</b><b>T</b><b>L</b><b>A</b><b>S</b><b>E</b></div>
+    </section>
 
-  <p class="note">
-    При выпуске новой версии поднимайте <code>latestVersionCode</code> и
-    <code>latestVersionName</code>. <code>minSupportedVersionCode</code>
-    поднимайте только при несовместимых изменениях: игроки ниже него увидят
-    блокирующий экран обновления.
-  </p>
-</main>
+    <section class="section" id="features">
+      <h2>Как играть</h2>
+      <div class="cards">
+      <article class="card" style="--c:#E9C46A">
+        <h3>Восемь направлений</h3>
+        <p>Слова спрятаны по горизонтали, вертикали и диагоналям — путь можно вести в обе стороны.</p>
+      </article>
+      <article class="card" style="--c:#7FA9E0">
+        <h3>Бонусные слова</h3>
+        <p>Незагаданные слова на сетке тоже засчитываются: за них дают монеты, а монеты можно обменять на подсказки.</p>
+      </article>
+      <article class="card" style="--c:#8DCEB9">
+        <h3>Русский и английский</h3>
+        <p>Сто уровней на каждом языке: интерфейс и словари доступны на русском и английском.</p>
+      </article>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="ver">
+        <div>
+          <p class="label">Версия в Google Play</p>
+          <p class="num" data-version>1.1.1</p>
+          <p class="sub" data-published>Дата публикации уточняется…</p>
+        </div>
+        <a class="btn btn-ghost" href="./updates.html">Все обновления</a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="foot">
+    <span>© 2024–2026 AdrenalinAndroid · <a href="mailto:android.adrenalin@outlook.com">android.adrenalin@outlook.com</a></span>
+    <span class="links">
+      <a href="https://play.google.com/store/apps/details?id=com.androidadrenalin.funny_find_words">Google Play</a>
+      <a href="./privacy.html">Политика конфиденциальности</a>
+      <a href="./terms.html">Условия использования</a>
+    </span>
+  </footer>
+</div>
 
 <script>
-  (function () {
-    const statusText = document.getElementById('status-text');
-    const statusDot = document.getElementById('status-dot');
-    const fields = {
-      min: document.getElementById('min-code'),
-      latest: document.getElementById('latest-code'),
-      name: document.getElementById('latest-name'),
-      published: document.getElementById('published-at'),
-      schema: document.getElementById('schema'),
-    };
+  // Дата приходит из version.json в виде ГГГГ-ММ-ДД, показываем её по-русски.
+  function formatDate(value) {
+    if (!value) { return ''; }
+    var date = new Date(value + 'T00:00:00');
+    if (isNaN(date)) { return value; }
+    return date.toLocaleDateString('ru-RU', { day: 'numeric', month: 'long', year: 'numeric' });
+  }
 
-    function fail(message) {
-      statusText.textContent = message;
-      statusDot.classList.add('error');
-    }
-
-    fetch('./version.json?ts=' + Date.now(), { cache: 'no-store' })
-      .then(function (response) {
-        if (!response.ok) {
-          throw new Error('HTTP ' + response.status);
-        }
-        return response.json();
-      })
-      .then(function (config) {
-        fields.min.textContent = config.minSupportedVersionCode;
-        fields.latest.textContent = config.latestVersionCode ?? '—';
-        fields.name.textContent = config.latestVersionName ?? '—';
-        fields.published.textContent = config.publishedAt ?? '—';
-        fields.schema.textContent = config.schemaVersion;
-        statusText.textContent = 'Конфиг загружен';
-      })
-      .catch(function (error) {
-        fail('Не удалось прочитать version.json: ' + error.message);
-      });
-  })();
+  // Версия и дата берутся из version.json, чтобы страница не устаревала.
+  fetch('./version.json?ts=' + Date.now(), { cache: 'no-store' })
+    .then(function (r) { return r.ok ? r.json() : Promise.reject(new Error('HTTP ' + r.status)); })
+    .then(function (c) {
+      if (c.latestVersionName) {
+        document.querySelectorAll('[data-version]').forEach(function (n) {
+          n.textContent = c.latestVersionName;
+        });
+      }
+      var published = document.querySelector('[data-published]');
+      if (published && c.publishedAt) {
+        published.textContent = 'Опубликовано ' + formatDate(c.publishedAt);
+      }
+    })
+    .catch(function () {
+      var published = document.querySelector('[data-published]');
+      if (published) {
+        published.textContent = 'Данные о версии сейчас недоступны';
+      }
+    });
 </script>
 </body>
 </html>

@@ -1,0 +1,210 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Funny Find Words — обновления</title>
+  <style>
+    :root {
+      color-scheme: dark;
+      --bg: #10182f;
+      --panel: #18233f;
+      --panel-border: #2a3a5f;
+      --text: #f2f5fb;
+      --muted: #a9b6d3;
+      --accent: #4cc26b;
+      --accent-dark: #2f9a4e;
+      --error: #ff7a7a;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      background:
+        radial-gradient(circle at 20% 10%, rgba(76, 194, 107, 0.12), transparent 45%),
+        radial-gradient(circle at 85% 90%, rgba(90, 140, 255, 0.12), transparent 45%),
+        var(--bg);
+      color: var(--text);
+      font: 16px/1.5 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    }
+    main {
+      width: 100%;
+      max-width: 640px;
+      padding: 32px;
+      border: 1px solid var(--panel-border);
+      border-radius: 24px;
+      background: rgba(24, 35, 63, 0.92);
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.35);
+    }
+    h1 {
+      margin: 0 0 6px;
+      font-size: clamp(24px, 5vw, 32px);
+      line-height: 1.15;
+      letter-spacing: -0.02em;
+    }
+    .subtitle {
+      margin: 0 0 24px;
+      color: var(--muted);
+    }
+    .status {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 12px;
+      margin-bottom: 24px;
+      border: 1px solid var(--panel-border);
+      border-radius: 999px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+    .dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--accent);
+    }
+    .dot.error { background: var(--error); }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 0 0 24px;
+      font-variant-numeric: tabular-nums;
+    }
+    caption {
+      caption-side: top;
+      text-align: left;
+      padding-bottom: 10px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+    th, td {
+      padding: 12px 10px;
+      border-bottom: 1px solid var(--panel-border);
+      text-align: left;
+      vertical-align: top;
+    }
+    th {
+      width: 52%;
+      color: var(--muted);
+      font-weight: 500;
+    }
+    td { font-weight: 700; }
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    a.button {
+      display: inline-block;
+      padding: 12px 20px;
+      border-radius: 14px;
+      background: linear-gradient(180deg, var(--accent), var(--accent-dark));
+      color: #06210f;
+      font-weight: 800;
+      text-decoration: none;
+    }
+    a.button.secondary {
+      background: transparent;
+      border: 1px solid var(--panel-border);
+      color: var(--text);
+    }
+    .note {
+      margin: 24px 0 0;
+      padding-top: 18px;
+      border-top: 1px solid var(--panel-border);
+      color: var(--muted);
+      font-size: 14px;
+    }
+    code {
+      padding: 2px 6px;
+      border-radius: 6px;
+      background: rgba(255, 255, 255, 0.07);
+      color: var(--text);
+      font-size: 0.95em;
+    }
+    @media (max-width: 480px) {
+      main { padding: 22px; border-radius: 18px; }
+      th, td { padding: 10px 6px; }
+    }
+  </style>
+</head>
+<body>
+<main>
+  <h1>Funny Find Words</h1>
+  <p class="subtitle">Параметры обновлений приложения</p>
+
+  <div class="status" id="status">
+    <span class="dot" id="status-dot"></span>
+    <span id="status-text">Читаю version.json…</span>
+  </div>
+
+  <table aria-describedby="table-note">
+    <caption id="table-note">Эти значения приложение читает при запуске.</caption>
+    <tbody>
+      <tr><th>Минимально поддерживаемая версия</th><td id="min-code">—</td></tr>
+      <tr><th>Последняя версия (versionCode)</th><td id="latest-code">—</td></tr>
+      <tr><th>Название последней версии</th><td id="latest-name">—</td></tr>
+      <tr><th>Дата публикации</th><td id="published-at">—</td></tr>
+      <tr><th>Версия схемы</th><td id="schema">—</td></tr>
+    </tbody>
+  </table>
+
+  <div class="actions">
+    <a class="button" id="play-link"
+       href="https://play.google.com/store/apps/details?id=com.androidadrenalin.funny_find_words">
+      Открыть в Google Play
+    </a>
+    <a class="button secondary" href="./version.json">version.json</a>
+  </div>
+
+  <p class="note">
+    При выпуске новой версии поднимайте <code>latestVersionCode</code> и
+    <code>latestVersionName</code>. <code>minSupportedVersionCode</code>
+    поднимайте только при несовместимых изменениях: игроки ниже него увидят
+    блокирующий экран обновления.
+  </p>
+</main>
+
+<script>
+  (function () {
+    const statusText = document.getElementById('status-text');
+    const statusDot = document.getElementById('status-dot');
+    const fields = {
+      min: document.getElementById('min-code'),
+      latest: document.getElementById('latest-code'),
+      name: document.getElementById('latest-name'),
+      published: document.getElementById('published-at'),
+      schema: document.getElementById('schema'),
+    };
+
+    function fail(message) {
+      statusText.textContent = message;
+      statusDot.classList.add('error');
+    }
+
+    fetch('./version.json?ts=' + Date.now(), { cache: 'no-store' })
+      .then(function (response) {
+        if (!response.ok) {
+          throw new Error('HTTP ' + response.status);
+        }
+        return response.json();
+      })
+      .then(function (config) {
+        fields.min.textContent = config.minSupportedVersionCode;
+        fields.latest.textContent = config.latestVersionCode ?? '—';
+        fields.name.textContent = config.latestVersionName ?? '—';
+        fields.published.textContent = config.publishedAt ?? '—';
+        fields.schema.textContent = config.schemaVersion;
+        statusText.textContent = 'Конфиг загружен';
+      })
+      .catch(function (error) {
+        fail('Не удалось прочитать version.json: ' + error.message);
+      });
+  })();
+</script>
+</body>
+</html>
